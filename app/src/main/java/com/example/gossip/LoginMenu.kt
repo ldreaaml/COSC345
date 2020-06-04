@@ -1,5 +1,6 @@
 package com.example.gossip
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -26,6 +27,10 @@ class LoginMenu: AppCompatActivity() {
                 .addOnCompleteListener{
                     if(it.isSuccessful){
                         Log.d("Login", "Login Success")
+
+                        val intent = Intent(this, MessagesMenu::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
                     } else {
                         Log.w("Login", "Sign in with email failed")
                         Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()

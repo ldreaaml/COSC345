@@ -2,23 +2,39 @@ package com.example.gossip
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.main_menu_activity.*
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main_menu.*
 
 class MainMenu : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_menu_activity)
+        setContentView(R.layout.activity_main_menu)
 
+        //To login Menu
         button_Menu_Login.setOnClickListener{
             val loginIntent = Intent(this, LoginMenu::class.java)
             startActivity(loginIntent)
         }
 
+        //To Register Menu
         button_Menu_Register.setOnClickListener{
             val registerIntent = Intent(this, RegisterMenu::class.java)
             startActivity(registerIntent)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val user = FirebaseAuth.getInstance().currentUser
+        Log.d("Session", user.toString())
+
+        if (user != null) {
+            val intent = Intent(this, MessagesMenu::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
     }
 }

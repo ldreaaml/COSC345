@@ -72,4 +72,7 @@ class RegisterMenu : AppCompatActivity() {
 }
 
 // How user data is stored on firebase
-class User (val uid: String, val username: String)
+class User (val uid: String, val username: String) {
+    constructor() : this("", "")
+}
+
