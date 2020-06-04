@@ -31,10 +31,15 @@ class RegisterMenu : AppCompatActivity() {
             //Firebase authentication
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
-                    if (it.isSuccessful) //return@addOnCompleteListener
-                    //If successful
-                    Log.d("Main", "success")
-                    saveUserToFirebaseDatabase()
+                    if (it.isSuccessful) {//return@addOnCompleteListener
+                        //If successful
+                        Log.d("Main", "success")
+                        saveUserToFirebaseDatabase()
+                    } else {
+                        Log.w("Registration", "sign in with email: Failed", it.exception)
+                        Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show()
+
+                    }
                 }
                 .addOnFailureListener {
                     Log.d("Main", "failed to create user: ${it.message}")

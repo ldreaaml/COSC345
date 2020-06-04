@@ -10,14 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MessagesMenu"></activity>
-        <activity android:name=".RegisterMenu">
+        <activity android:name=".RegisterMenu"></activity>
+        <activity android:name=".LoginMenu"></activity>
+        <activity android:name=".MainMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginMenu"></activity>
     </application>
 
 </manifest>
