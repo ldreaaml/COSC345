@@ -29,8 +29,9 @@ class LoginMenu: AppCompatActivity() {
                         Log.d("Login", "Login Success")
 
                         val intent = Intent(this, MessagesMenu::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+
                         startActivity(intent)
+                        finish()
                     } else {
                         Log.w("Login", "Sign in with email failed")
                         Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
