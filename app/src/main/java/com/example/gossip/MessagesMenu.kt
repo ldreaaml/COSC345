@@ -10,6 +10,10 @@ import android.view.MenuItem
 import android.widget.PopupMenu
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Main messages page
+ * Has new message in sign out buttons
+ */
 class MessagesMenu : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

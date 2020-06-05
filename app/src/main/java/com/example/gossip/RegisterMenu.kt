@@ -9,8 +9,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_register.*
 
+/**
+ * The register menu
+ */
 class RegisterMenu : AppCompatActivity() {
 
+    /**
+     * Creates the register menu and page activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -51,7 +57,9 @@ class RegisterMenu : AppCompatActivity() {
         }
     }
 
-    //Save to firebase data base
+    /**
+     * Saves users to the Firebase data base
+     */
     private fun saveUserToFirebaseDatabase() {
         val uid = FirebaseAuth.getInstance().uid ?:""
         val ref = FirebaseDatabase.getInstance().getReference("/user/$uid")

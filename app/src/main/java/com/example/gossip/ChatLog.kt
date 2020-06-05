@@ -24,7 +24,11 @@ class ChatLog : AppCompatActivity() {
     }
 }
 
-//More recycler view!
+/**
+ * Recyclerview. Used to display a group of items efficiently
+ *
+ *
+ */
 class ChatLogAdapter(private val temp: String) :
     RecyclerView.Adapter<ChatLogAdapter.ChatLogViewHolder>() {
 

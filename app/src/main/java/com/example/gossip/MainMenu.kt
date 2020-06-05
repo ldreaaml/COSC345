@@ -9,6 +9,9 @@ import kotlinx.android.synthetic.main.activity_main_menu.*
 
 class MainMenu : AppCompatActivity() {
 
+    /**
+     * Creates the main menu for new users
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
@@ -26,7 +29,9 @@ class MainMenu : AppCompatActivity() {
         }
     }
 
-    //Checks if user is logged in
+    /**
+     * Checks to see if user is already logged in
+     */
     override fun onStart() {
         super.onStart()
         val user = FirebaseAuth.getInstance().currentUser

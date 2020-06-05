@@ -15,11 +15,19 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_new_message.*
 import kotlinx.android.synthetic.main.user_list.view.*
 
-
+/**
+ * Makes the select user screen
+ *
+ * Calls on a recylcerviewer to do so
+ *
+ */
 class NewMessagesActivity : AppCompatActivity() {
-    private lateinit var mDatabase: DatabaseReference
-    private lateinit var mRecyclerView: RecyclerView
 
+
+    /**
+     * Loads the activity and changes the title of activity.
+     * Also calls the recyclerview
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_message)
@@ -33,7 +41,9 @@ class NewMessagesActivity : AppCompatActivity() {
 
     }
 
-    //Fetches users from the database
+    /**
+     * Fetches users from the database
+     */
     private fun fetchUser() {
         val database = FirebaseDatabase.getInstance().getReference("/user")
 
@@ -58,16 +68,32 @@ class NewMessagesActivity : AppCompatActivity() {
     }
 }
 
-//Does the recycler view stuff. Messy stuff
+/**
+ * Recyclerview. Used to display a group of items
+ *
+ * This class is mainly taken from the API in kotlin. It is used to display information is the
+ * specified textboxes.
+ *
+ * @property userList a list of usernames we are displaying
+ */
 class MyAdapter(private val userList: MutableList<Users>) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder.
-    // Each data item is just a string in this case that is shown in a TextView.
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+
+    /**
+     * A viewholder
+     *
+     * A custom view holder. Allows adding interactions with each item. This one implements a
+     * button.
+     *
+     * @property itemView the item we are adding stuff to
+     */
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        // Provide a reference to the views for each data item
+        // Complex data items may need more than one view per item, and
+        // you provide access to all the views for a data item in a view holder.
+        // Each data item is just a string in this case that is shown in a TextView.
         init {
             itemView.setOnClickListener(){
                 val intent = Intent(itemView.context, ChatLog::class.java)
@@ -76,7 +102,6 @@ class MyAdapter(private val userList: MutableList<Users>) :
         }
 
     }
-
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.MyViewHolder {
@@ -91,7 +116,6 @@ class MyAdapter(private val userList: MutableList<Users>) :
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val i = userList[position]
-        //holder.bind(i)
         holder.itemView.textView_username_new_messages?.text = i.username
     }
 
