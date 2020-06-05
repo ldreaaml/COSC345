@@ -24,6 +24,7 @@ class ChatLog : AppCompatActivity() {
     }
 }
 
+//More recycler view!
 class ChatLogAdapter(private val temp: String) :
     RecyclerView.Adapter<ChatLogAdapter.ChatLogViewHolder>() {
 
@@ -34,7 +35,6 @@ class ChatLogAdapter(private val temp: String) :
 
         val textView = LayoutInflater.from(parent?.context)
         val cellRow = textView.inflate(R.layout.chat_log_from_row, parent, false)
-        // set the view's size, margins, paddings and layout parameters
 
         return ChatLogViewHolder(cellRow)
     }
