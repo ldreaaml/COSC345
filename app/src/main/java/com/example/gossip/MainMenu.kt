@@ -26,6 +26,7 @@ class MainMenu : AppCompatActivity() {
         }
     }
 
+    //Checks if user is logged in
     override fun onStart() {
         super.onStart()
         val user = FirebaseAuth.getInstance().currentUser

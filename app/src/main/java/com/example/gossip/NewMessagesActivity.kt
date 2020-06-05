@@ -58,8 +58,7 @@ class NewMessagesActivity : AppCompatActivity() {
     }
 }
 
-// Recycler view not working for clicking on elements
-//Does the recycler view stuff
+//Does the recycler view stuff. Messy stuff
 class MyAdapter(private val userList: MutableList<Users>) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
