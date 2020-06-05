@@ -1,94 +1,104 @@
 package com.example.gossip
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.ActionMenuItemView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_new_message.*
 import kotlinx.android.synthetic.main.user_list.view.*
 
 
 class NewMessagesActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var mDatabase: DatabaseReference
+    private lateinit var mRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_message)
 
-        val userList = fetchUsers()
+        supportActionBar?.title = "Select User"
 
-        viewManager = LinearLayoutManager(this)
-        viewAdapter = MyAdapter(userList)
+        //val adapter = GroupAdapter<GroupieViewHolder>()
 
-        recyclerView = findViewById<RecyclerView>(R.id.rv_select_user).apply {
-            setHasFixedSize(true)
+        rv_select_user.layoutManager = LinearLayoutManager(this)
+        fetchUser()
 
-            layoutManager = viewManager
-
-            adapter = viewAdapter
-        }
     }
 
-    private fun fetchUsers(): ArrayList<User> {
-        val ref =  FirebaseDatabase.getInstance().getReference("/user")
-        val userItem = arrayListOf<User>()
-        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+    //Fetches users from the database
+    private fun fetchUser() {
+        val database = FirebaseDatabase.getInstance().getReference("/user")
 
+        database.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
-
-                p0.children.forEach {
-                    val userL = it.getValue(User::class.java)
-                    if (userL != null) {
-                        userItem.add(userL)
+                val userList = mutableListOf<Users>()
+                p0.children.forEach{
+                    val userItem = it.getValue(Users::class.java)
+                    if (userItem != null) {
+                        userList.add(userItem)
                     }
                 }
+
+                rv_select_user.adapter = MyAdapter(userList)
             }
 
             override fun onCancelled(p0: DatabaseError) {
 
             }
         })
-        return userItem
+
     }
 }
 
-class MyAdapter(private val myDataset: ArrayList<User>) :
+// Recycler view not working for clicking on elements
+//Does the recycler view stuff
+class MyAdapter(private val userList: MutableList<Users>) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just a string in this case that is shown in a TextView.
-    class MyViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        init {
+            itemView.setOnClickListener(){
+                val intent = Intent(itemView.context, ChatLog::class.java)
+                itemView.context.startActivity(intent)
+            }
+        }
+
+    }
 
 
     // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): MyAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.MyViewHolder {
         // create a new view
-        val textView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.user_list, parent, false) as TextView
+        val textView = LayoutInflater.from(parent?.context)
+        val cellRow = textView.inflate(R.layout.user_list, parent, false)
         // set the view's size, margins, paddings and layout parameters
 
-        return MyViewHolder(textView)
+        return MyViewHolder(cellRow)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.itemView.textView_username_new_messages.text = myDataset[position].username
+        val i = userList[position]
+        //holder.bind(i)
+        holder.itemView.textView_username_new_messages?.text = i.username
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = myDataset.size
+    override fun getItemCount(): Int {
+        return userList.size
+    }
+
 }

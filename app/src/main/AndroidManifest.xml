@@ -29,6 +29,7 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MessagesMenu"/>
         </activity>
+        <activity android:name=".ChatLog"></activity>
     </application>
 
 </manifest>

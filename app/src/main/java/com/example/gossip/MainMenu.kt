@@ -29,7 +29,6 @@ class MainMenu : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val user = FirebaseAuth.getInstance().currentUser
-        Log.d("Session", user.toString())
 
         if (user != null) {
             val intent = Intent(this, MessagesMenu::class.java)

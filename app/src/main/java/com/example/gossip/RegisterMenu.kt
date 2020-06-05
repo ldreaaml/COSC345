@@ -25,9 +25,6 @@ class RegisterMenu : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            Log.d("Register", "Email is: $email")
-            Log.d("Register", "Password is: $password")
-
             //Firebase authentication
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
@@ -49,7 +46,6 @@ class RegisterMenu : AppCompatActivity() {
 
         //Already got an account button. Takes you to login page
         aready_have_account_textView.setOnClickListener {
-            Log.d("mainActivity", "Try to show login")
             val intent = Intent(this, LoginMenu::class.java)
             startActivity(intent)
         }
@@ -60,7 +56,7 @@ class RegisterMenu : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().uid ?:""
         val ref = FirebaseDatabase.getInstance().getReference("/user/$uid")
 
-        val user = User(uid, editText_username.text.toString())
+        val user = Users(uid, editText_username.toString())
 
         //Actual save line
         ref.setValue(user)
@@ -71,8 +67,5 @@ class RegisterMenu : AppCompatActivity() {
     }
 }
 
-// How user data is stored on firebase
-class User (val uid: String, val username: String) {
-    constructor() : this("", "")
-}
+
 
