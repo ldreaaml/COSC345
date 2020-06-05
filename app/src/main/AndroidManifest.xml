@@ -30,6 +30,7 @@
                 android:value=".MessagesMenu"/>
         </activity>
         <activity android:name=".ChatLog"></activity>
+        <activity android:name=".Anonimity_control"></activity>
     </application>
 
 </manifest>
