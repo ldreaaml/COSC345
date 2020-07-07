@@ -31,6 +31,16 @@
         </activity>
         <activity android:name=".ChatLog"></activity>
         <activity android:name=".Anonimity_control"></activity>
+
+        <!-- [START firebase_service] -->
+        <service
+            android:name=".MessagesMenu"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- [END firebase_service] -->
     </application>
 
 </manifest>

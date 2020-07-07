@@ -20,7 +20,21 @@ class MessagesMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_messages_menu)
 
-        verifyLogin()
+        //verifyLogin()
+    }
+
+    /**
+     * Checks to see if user is already logged in
+     */
+    override fun onStart() {
+        super.onStart()
+        val user = FirebaseAuth.getInstance().currentUser
+
+        if (user == null) {
+            val intent = Intent(this, MainMenu::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
     }
 
     //Verifies lf logged in by checking uid

@@ -17,4 +17,6 @@ class Users {
         this.username = username
     }
 
+    constructor()
+
 }

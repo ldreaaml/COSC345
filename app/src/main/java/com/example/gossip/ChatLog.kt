@@ -21,6 +21,7 @@ class ChatLog : AppCompatActivity() {
 
         rv_chat_log.layoutManager = LinearLayoutManager(this)
         rv_chat_log.adapter = ChatLogAdapter(s)
+
     }
 }
 
@@ -34,13 +35,23 @@ class ChatLogAdapter(private val temp: String) :
 
     class ChatLogViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView)
 
+    /*
+    0 for coming
+    1 for you
+     */
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int) : ChatLogAdapter.ChatLogViewHolder {
+        if (viewType == 0) {
+            val textView = LayoutInflater.from(parent?.context)
+            val cellRow = textView.inflate(R.layout.chat_log_from_row, parent, false)
 
-        val textView = LayoutInflater.from(parent?.context)
-        val cellRow = textView.inflate(R.layout.chat_log_from_row, parent, false)
+            return ChatLogViewHolder(cellRow)
+        }else{
+            val textView = LayoutInflater.from(parent?.context)
+            val cellRow = textView.inflate(R.layout.chat_log_to_row, parent, false)
 
-        return ChatLogViewHolder(cellRow)
+            return ChatLogViewHolder(cellRow)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -51,5 +62,6 @@ class ChatLogAdapter(private val temp: String) :
         holder.itemView.textView_chat_log.text = "123"
     }
 
-
 }
+
+abstract class ChatLogViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView)
