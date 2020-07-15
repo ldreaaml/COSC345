@@ -51,7 +51,7 @@ class ChatLogAdapter(private val chat: MutableList<String>) :
                                     viewType: Int) : ChatLogAdapter.ChatLogViewHolder {
 
         val textView = LayoutInflater.from(parent?.context)
-            .inflate(R.layout.chat_log_from_row, parent, false)
+            .inflate(R.layout.chat_log_to_row, parent, false)
 
         return ChatLogViewHolder(textView)
 
