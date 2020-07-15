@@ -8,7 +8,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.PopupMenu
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
 
 /**
  * Main messages page
@@ -20,7 +23,18 @@ class MessagesMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_messages_menu)
 
-        //verifyLogin()
+        supportActionBar?.title = "Chats"
+
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener {
+                if (!it.isSuccessful){
+                    Log.w("getInstanceID failed", it.exception)
+                }
+
+                val token = it.result?.token
+
+                Log.d("getInstanceID success", token.toString())
+            })
     }
 
     /**
@@ -28,23 +42,7 @@ class MessagesMenu : AppCompatActivity() {
      */
     override fun onStart() {
         super.onStart()
-        val user = FirebaseAuth.getInstance().currentUser
-
-        if (user == null) {
-            val intent = Intent(this, MainMenu::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-        }
-    }
-
-    //Verifies lf logged in by checking uid
-    private fun verifyLogin() {
-        val uid = FirebaseAuth.getInstance().uid
-        if (uid == null) {
-            Log.d("Session", "not logged in")
-        } else {
-            Log.d("Session", uid)
-        }
+        getUserData()
     }
 
     //Creates a menu inflater
@@ -70,6 +68,19 @@ class MessagesMenu : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun getUserData() {
+        val userAuth = FirebaseAuth.getInstance().currentUser
+
+        if (userAuth != null) {
+
+        } else {
+            Log.d("Current_User", "Auth failed")
+            val intent = Intent(this, MainMenu::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
     }
 

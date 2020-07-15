@@ -17,10 +17,20 @@ class ChatLog : AppCompatActivity() {
         setContentView(R.layout.activity_chat_log)
 
         supportActionBar?.title = "Chat log"
-        val s = "His"
+
+        val messageList = mutableListOf<String>()
+        var userMessage = ""
 
         rv_chat_log.layoutManager = LinearLayoutManager(this)
-        rv_chat_log.adapter = ChatLogAdapter(s)
+        rv_chat_log.adapter = ChatLogAdapter(messageList)
+
+        button_send.setOnClickListener(){
+            if (editText_message != null){
+                userMessage = editText_message.text.toString()
+                messageList.add(userMessage)
+                (rv_chat_log.adapter as ChatLogAdapter).notifyItemInserted(messageList.size)
+            }
+        }
 
     }
 }
@@ -30,38 +40,30 @@ class ChatLog : AppCompatActivity() {
  *
  *
  */
-class ChatLogAdapter(private val temp: String) :
+class ChatLogAdapter(private val chat: MutableList<String>) :
     RecyclerView.Adapter<ChatLogAdapter.ChatLogViewHolder>() {
 
-    class ChatLogViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView)
-
-    /*
-    0 for coming
-    1 for you
-     */
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int) : ChatLogAdapter.ChatLogViewHolder {
-        if (viewType == 0) {
-            val textView = LayoutInflater.from(parent?.context)
-            val cellRow = textView.inflate(R.layout.chat_log_from_row, parent, false)
-
-            return ChatLogViewHolder(cellRow)
-        }else{
-            val textView = LayoutInflater.from(parent?.context)
-            val cellRow = textView.inflate(R.layout.chat_log_to_row, parent, false)
-
-            return ChatLogViewHolder(cellRow)
-        }
+    class ChatLogViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+        // TODO: Do something here
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup,
+                                    viewType: Int) : ChatLogAdapter.ChatLogViewHolder {
+
+        val textView = LayoutInflater.from(parent?.context)
+            .inflate(R.layout.chat_log_from_row, parent, false)
+
+        return ChatLogViewHolder(textView)
+
+    }
+
+
     override fun getItemCount(): Int {
-        return 3
+        return chat.size
     }
 
     override fun onBindViewHolder(holder: ChatLogAdapter.ChatLogViewHolder, position: Int) {
-        holder.itemView.textView_chat_log.text = "123"
+        holder.itemView.textView_chat_log.text = chat[position]
     }
 
 }
-
-abstract class ChatLogViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView)

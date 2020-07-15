@@ -12,7 +12,6 @@
         <activity android:name=".MessagesMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,8 +28,8 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MessagesMenu"/>
         </activity>
-        <activity android:name=".ChatLog"></activity>
-        <activity android:name=".Anonimity_control"></activity>
+        <activity android:name=".ChatLog" />
+        <activity android:name=".Anonimity_control" />
 
         <!-- [START firebase_service] -->
         <service

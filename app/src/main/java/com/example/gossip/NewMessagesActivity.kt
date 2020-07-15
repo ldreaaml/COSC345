@@ -79,8 +79,6 @@ class NewMessagesActivity : AppCompatActivity() {
 class MyAdapter(private val userList: MutableList<Users>) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
-
-
     /**
      * A viewholder
      *
@@ -100,7 +98,6 @@ class MyAdapter(private val userList: MutableList<Users>) :
                 itemView.context.startActivity(intent)
             }
         }
-
     }
 
     // Create new views (invoked by the layout manager)

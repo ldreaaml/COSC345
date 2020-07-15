@@ -64,7 +64,7 @@ class RegisterMenu : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().uid ?:""
         val ref = FirebaseDatabase.getInstance().getReference("/user/$uid")
 
-        val user = Users(uid, editText_username.toString())
+        val user = Users(uid, editText_username.text.toString(), editText_email.text.toString())
 
         //Actual save line
         ref.setValue(user)
